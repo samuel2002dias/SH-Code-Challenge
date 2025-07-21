@@ -1,6 +1,6 @@
 # SH Code Challenge
 
-1st commit - 
+**1st commit**  
 Create the application, and figure out what dependencies I'll need to do the challenge.
 Although I understand Kotlin and took a few classes on the programming language during my undergraduate studies, I've never implemented any API in it, since all my mobile development projects were designed to be coded in Flutter. So it was necessary to do some global research to understand what I would need. Then, after researching, I realized that I would need some plugins like ksp and dependencies like retrofit, moshi, room.
 
