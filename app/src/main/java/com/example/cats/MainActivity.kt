@@ -1,25 +1,19 @@
 package com.example.cats
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.navigation.compose.*
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.cats.ui.theme.CatsTheme
-import kotlinx.coroutines.launch
-import kotlin.collections.get
+import com.example.cats.BreedListScreen
+import com.example.cats.BreedDetailScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +21,39 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CatsTheme {
+                val navController = rememberNavController()
+                val viewModel = remember { MainViewModel() }
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BreedScreen(modifier = Modifier.padding(innerPadding))
+                    NavHost(
+                        navController = navController,
+                        startDestination = "breedList",
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable("breedList") {
+                            BreedListScreen(
+                                viewModel = viewModel,
+                                onBreedClick = { breedId ->
+                                    navController.navigate("breedDetail/$breedId")
+                                }
+                            )
+                        }
+                        composable(
+                            "breedDetail/{breedId}",
+                            arguments = listOf(navArgument("breedId") { type = NavType.StringType })
+                        ) { backStackEntry ->
+                            val breedId = backStackEntry.arguments?.getString("breedId") ?: ""
+                            BreedDetailScreen(
+                                breedId = breedId,
+                                viewModel = viewModel,
+                                onBack = { navController.popBackStack() }
+                            )
+                        }
+                    }
                 }
             }
         }
     }
+<<<<<<< Updated upstream
 }
 
 class MainViewModel : ViewModel() {
@@ -109,3 +130,6 @@ fun BreedScreenPreview() {
         BreedScreen()
     }
 }
+=======
+}
+>>>>>>> Stashed changes
