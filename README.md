@@ -1,6 +1,7 @@
 # SH Code Challenge
 
 ---
+
 ## 1st Commit
 
 Create the application, and figure out what dependencies I'll need to do the challenge.
@@ -12,6 +13,7 @@ At the end, I created a view so that I could see if the call was made correctly.
 ### Note: The APY key was public in this commit. The main focus was to learn **how to work with API's in Kotlin**, since I've never worked with it before
 
 ---
+
 ## 2nd commit  
 
 #### Implemented all the screens required. Created:
@@ -39,3 +41,5 @@ Model - The Breed data class and API service (CatApiService) represent the data 
 View - Composable screens like BreedListScreen and BreedDetailScreen display UI and interact with the ViewModel.
 
 ViewModel - MainViewModel manages UI state, data fetching, and business logic.
+
+---
