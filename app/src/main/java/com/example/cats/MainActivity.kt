@@ -53,7 +53,7 @@ class MainViewModel : ViewModel() {
             }
         }
     }
-} // <-- Added missing closing brace
+}
 
 @Composable
 fun BreedScreen(modifier: Modifier = Modifier) {
