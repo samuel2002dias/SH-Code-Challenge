@@ -43,3 +43,19 @@ View - Composable screens like BreedListScreen and BreedDetailScreen display UI 
 ViewModel - MainViewModel manages UI state, data fetching, and business logic.
 
 ---
+
+## 3rd and final commit 
+
+Finally I just had to enable offline functionality for breeds and favorites. It wasn't easy, because I never did this in a kotlin app, or any other app, because all my Android projects during university were mainly online services, which would be impossible to use offline due to the need to use payment APIs, location APIs, etc. 
+
+Because of that, I had to do my own research about integrate the room into the app to implement offline functionality. After some research, I was able to create two entity classes: BreedEntity for storing cat breeds and FavoriteEntity for storing favorite breed IDs. I also made corresponding data access objects interfaces, BreedDao and FavoriteDao, to handle database operations like insert, query, and delete.
+
+I set up the AppDatabase class to include both entities and DAOs, and set the database version to 2. At first, I forgot to update the version number after adding new entities, which caused a error where Room couldn't verify the data integrity After fixing the error, got another error saying migration from 1 to 2 was required but not found.
+
+After spending almost half a day researching, found out this happened because Room detected a schema change but I didn’t know how to migrate the old data. To resolve this during development, I added .fallbackToDestructiveMigration() in the database builder, which tells Room to wipe and recreate the database if the schema changes, avoiding migration errors.
+
+I then updated the MainViewModel to use the DAOs for loading, saving, and toggling favorites and breeds. The logic was changed so the app first loads breeds from the local database, then tries to update from the API, and saves results back to Room. I also updated the UI and MainActivity to use the new ViewModel constructor and reflect the new data flow.
+
+In summary, despite knowing the basics of Kotlin, overall this challenge was a learning curve, as I had never implemented an API in Kotlin, nor implemented online functionality, since I never needed to in my projects during university.
+
+
