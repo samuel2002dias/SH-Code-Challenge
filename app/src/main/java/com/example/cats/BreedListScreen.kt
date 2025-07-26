@@ -14,39 +14,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import androidx.compose.ui.Alignment
 
-/**
- * Composable screen displaying a list of breeds and favorites.
- *
- * @param viewModel The main view model.
- * @param onBreedClick Callback when a breed is clicked.
- */
 @Composable
 fun BreedListScreen(
     viewModel: MainViewModel,
-    onBreedClick: (String) -> Unit
+    onBreedClick: (String) -> Unit,
+    onShowFavorites: () -> Unit
 ) {
-    var selectedTabIndex by remember { mutableStateOf(0) }
-    val tabTitles = listOf("All Breeds", "Favorites")
     val error = viewModel.error
     val searchQuery = viewModel.searchQuery
-
-    val breeds = when (selectedTabIndex) {
-        0 -> viewModel.filteredBreeds
-        1 -> viewModel.filteredBreeds.filter { viewModel.favorites.contains(it.id) }
-        else -> viewModel.filteredBreeds
-    }
+    val breeds = viewModel.filteredBreeds
 
     Column(modifier = Modifier.fillMaxSize()) {
-        TabRow(selectedTabIndex = selectedTabIndex) {
-            tabTitles.forEachIndexed { index, title ->
-                Tab(
-                    selected = selectedTabIndex == index,
-                    onClick = { selectedTabIndex = index },
-                    text = { Text(title) }
-                )
-            }
-        }
-
         OutlinedTextField(
             value = searchQuery,
             onValueChange = { viewModel.updateSearch(it) },
@@ -64,7 +42,9 @@ fun BreedListScreen(
             )
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(16.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(breeds) { breed ->
@@ -106,6 +86,15 @@ fun BreedListScreen(
                     }
                 }
             }
+        }
+
+        Button(
+            onClick = onShowFavorites,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text("Show Favorites")
         }
     }
 }

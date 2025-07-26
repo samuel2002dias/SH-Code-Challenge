@@ -4,19 +4,24 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.navigation.compose.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.cats.ui.theme.CatsTheme
+import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.padding
 
 /**
- * Main activity hosting the navigation and UI for the app.
+ * Composable screen displaying a searchable list of cat breeds.
+ * Allows marking breeds as favorites and navigating to breed details or favorites.
  */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +46,8 @@ class MainActivity : ComponentActivity() {
                                 viewModel = viewModel,
                                 onBreedClick = { breedId ->
                                     navController.navigate("breedDetail/$breedId")
-                                }
+                                },
+                                onShowFavorites = { navController.navigate("favorites") }
                             )
                         }
                         composable(
@@ -51,6 +57,12 @@ class MainActivity : ComponentActivity() {
                             val breedId = backStackEntry.arguments?.getString("breedId") ?: ""
                             BreedDetailScreen(
                                 breedId = breedId,
+                                viewModel = viewModel,
+                                onBack = { navController.popBackStack() }
+                            )
+                        }
+                        composable("favorites") {
+                            FavoriteBreedsScreen(
                                 viewModel = viewModel,
                                 onBack = { navController.popBackStack() }
                             )
