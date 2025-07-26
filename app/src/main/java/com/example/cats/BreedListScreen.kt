@@ -14,6 +14,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import androidx.compose.ui.Alignment
 
+/**
+ * Composable screen displaying a list of breeds and favorites.
+ *
+ * @param viewModel The main view model.
+ * @param onBreedClick Callback when a breed is clicked.
+ */
 @Composable
 fun BreedListScreen(
     viewModel: MainViewModel,

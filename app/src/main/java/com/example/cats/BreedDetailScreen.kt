@@ -7,8 +7,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 
+/**
+ * Composable screen showing details for a specific breed.
+ *
+ * @param breedId The ID of the breed to display.
+ * @param viewModel The main view model.
+ * @param onBack Callback for back navigation.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BreedDetailScreen(
@@ -23,7 +31,7 @@ fun BreedDetailScreen(
                 title = { Text(breed?.name ?: "Breed Detail") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )

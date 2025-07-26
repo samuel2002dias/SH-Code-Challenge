@@ -7,11 +7,20 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import com.squareup.moshi.Moshi
 
+/**
+ * Retrofit API service for fetching cat breeds.
+ */
 interface CatApiService {
+    /**
+     * Gets the list of cat breeds from the API.
+     */
     @GET("v1/breeds")
     suspend fun getBreeds(): List<Breed>
 }
 
+/**
+ * Singleton object for creating the Retrofit client.
+ */
 object RetrofitClient {
 
     private const val BASE_URL = "https://api.thecatapi.com/"
@@ -30,6 +39,9 @@ object RetrofitClient {
 
     private val moshi = Moshi.Builder().build()
 
+    /**
+     * Lazily initialized API service.
+     */
     val api: CatApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
